@@ -1,0 +1,47 @@
+# DomainTools Client Configuration
+# Copy this file to config.yaml and fill in your credentials
+
+# API Credentials (required)
+api:
+  key: "your_api_key_here"
+  secret: "your_api_secret_here"
+  # Optional: Custom API URL
+  # url: "https://api.domaintools.com/v1/"
+
+# Request Settings
+settings:
+  # Request timeout in seconds
+  timeout: 30
+  # Maximum number of retries
+  max_retries: 3
+  # Default output format (json, table, tree)
+  output_format: "table"
+
+# CLI Defaults
+cli:
+  # Default number of results for searches
+  default_limit: 100
+  # Enable verbose output
+  verbose: false
+  # Color output (true/false/auto)
+  color: "auto"
+  # Default concurrent requests for batch operations
+  concurrent_requests: 5
+
+# Monitoring Defaults
+monitoring:
+  # Default days to look back
+  days_back: 30
+  # Default risk threshold for alerts
+  risk_threshold: 70
+  # Include deleted domains in monitoring
+  include_deleted: false
+
+# Cache Settings (optional)
+cache:
+  # Enable caching
+  enabled: false
+  # Cache directory
+  directory: "~/.domaintools/cache"
+  # Cache TTL in seconds
+  ttl: 3600

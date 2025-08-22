@@ -1,0 +1,86 @@
+# Git
+.git/
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.nyc_output
+coverage.xml
+*.cover
+.hypothesis/
+.tox/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation
+docs/_build/
+site/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Local configuration
+.env
+.env.local
+config.yaml
+config.yml
+config.json
+
+# Cache directories
+.cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+
+# Backup files
+*.bak
+*.backup
+
+# Development tools
+.pre-commit-config.yaml

@@ -48,7 +48,7 @@ class TestDomainToolsClient:
             client = DomainToolsClient("key", "secret")
 
             with pytest.raises(AuthenticationError):
-                client._handle_exception(NotAuthorizedException("Invalid credentials"))
+                client._handle_exception(NotAuthorizedException(401, "Invalid credentials"))
 
     def test_handle_bad_request_error(self):
         """Test handling of bad request errors."""
@@ -56,7 +56,7 @@ class TestDomainToolsClient:
             client = DomainToolsClient("key", "secret")
 
             with pytest.raises(InvalidRequestError):
-                client._handle_exception(BadRequestException("Bad request"))
+                client._handle_exception(BadRequestException(400, "Bad request"))
 
     def test_handle_rate_limit_error(self):
         """Test handling of rate limit errors."""
@@ -64,7 +64,7 @@ class TestDomainToolsClient:
             client = DomainToolsClient("key", "secret")
 
             with pytest.raises(RateLimitError):
-                client._handle_exception(ServiceException("Rate limit exceeded"))
+                client._handle_exception(ServiceException(429, "Rate limit exceeded"))
 
     def test_handle_generic_service_error(self):
         """Test handling of generic service errors."""
@@ -72,7 +72,7 @@ class TestDomainToolsClient:
             client = DomainToolsClient("key", "secret")
 
             with pytest.raises(DomainToolsError):
-                client._handle_exception(ServiceException("Service unavailable"))
+                client._handle_exception(ServiceException(503, "Service unavailable"))
 
     def test_handle_unexpected_error(self):
         """Test handling of unexpected errors."""
@@ -100,7 +100,7 @@ class TestDomainToolsClient:
     def test_domain_profile_error(self):
         """Test domain profile request with error."""
         with patch("domaintools_client.api.client.DomainToolsAPI") as mock_api:
-            mock_api.return_value.domain_profile.side_effect = ServiceException("API Error")
+            mock_api.return_value.domain_profile.side_effect = ServiceException(500, "API Error")
 
             client = DomainToolsClient("key", "secret")
 

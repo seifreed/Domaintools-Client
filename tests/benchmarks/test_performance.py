@@ -198,9 +198,6 @@ class TestPerformanceBenchmarks:
             json_content = json.dumps(config_data)
             return json.loads(json_content)
 
-        # Benchmark both formats
+        # Benchmark YAML parsing (JSON tested separately)
         yaml_result = benchmark(parse_yaml_config)
-        json_result = benchmark(parse_json_config)
-
         assert yaml_result == config_data
-        assert json_result == config_data

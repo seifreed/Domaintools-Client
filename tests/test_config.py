@@ -199,7 +199,7 @@ class TestConfigManager:
         ):
             manager = ConfigManager(config_dir=temp_config_dir)
 
-            with patch("domaintools_client.config.manager.DomainToolsClient") as mock_client:
+            with patch("domaintools_client.api.client.DomainToolsClient") as mock_client:
                 _ = manager.get_client()
                 mock_client.assert_called_once_with(
                     api_key="test_key", api_secret="test_secret", api_url=None
@@ -212,11 +212,10 @@ class TestConfigManager:
 
         manager = ConfigManager(config_dir=temp_config_dir, config_file=str(yaml_file))
 
-        # Should handle error gracefully and not crash
-        with patch("builtins.print") as mock_print:
+        # Should raise ValueError for invalid config
+        with pytest.raises(ValueError) as exc_info:
             _ = manager.load()
-            # Should print warning about invalid YAML
-            mock_print.assert_called()
+        assert "Invalid configuration" in str(exc_info.value)
 
     def test_invalid_json_file_handling(self, temp_config_dir):
         """Test handling of invalid JSON files."""
@@ -225,5 +224,7 @@ class TestConfigManager:
 
         manager = ConfigManager(config_dir=temp_config_dir)
 
-        # Should handle error gracefully and not crash
-        _ = manager.load()  # Should not raise exception
+        # Should raise ValueError when loading invalid JSON
+        with pytest.raises(ValueError) as exc_info:
+            _ = manager.load()
+        assert "Invalid configuration" in str(exc_info.value) or "JSON" in str(exc_info.value)

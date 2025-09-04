@@ -10,26 +10,37 @@ from domaintools_client.config.manager import ConfigManager
 from domaintools_client.formatters.output import OutputFormatter
 
 
+@pytest.mark.benchmark
 class TestPerformanceBenchmarks:
     """Performance benchmark tests."""
 
     @pytest.fixture
     def mock_client(self):
         """Create a mock client for performance testing."""
-        with patch("domaintools_client.api.client.DomainToolsAPI") as mock_api:
-            mock_response = Mock()
-            mock_response.data.return_value = {"response": {"domain": "example.com"}}
-            mock_api.return_value.domain_profile.return_value = mock_response
+        patcher = patch("domaintools_client.api.client.DomainToolsAPI")
+        mock_api = patcher.start()
 
-            client = DomainToolsClient("test_key", "test_secret")
-            return client
+        mock_response = Mock()
+        mock_response.data.return_value = {"response": {"domain": "example.com"}}
+        mock_api.return_value.domain_profile.return_value = mock_response
+
+        client = DomainToolsClient("test_key", "test_secret")
+
+        yield client
+
+        patcher.stop()
 
     def test_client_initialization_performance(self, benchmark):
         """Benchmark client initialization time."""
 
         def initialize_client():
-            with patch("domaintools_client.api.client.DomainToolsAPI"):
-                return DomainToolsClient("test_key", "test_secret")
+            patcher = patch("domaintools_client.api.client.DomainToolsAPI")
+            patcher.start()
+            try:
+                client = DomainToolsClient("test_key", "test_secret")
+                return client
+            finally:
+                patcher.stop()
 
         result = benchmark(initialize_client)
         assert result is not None

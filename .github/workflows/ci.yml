@@ -359,7 +359,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     needs: [quality-checks, test-suite]
-    if: github.event_name == 'push'
+    # Temporarily disabled: requires DOCKERHUB_USERNAME and DOCKERHUB_TOKEN secrets
+    if: false
 
     permissions:
       contents: read
